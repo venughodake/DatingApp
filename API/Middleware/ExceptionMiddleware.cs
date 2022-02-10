@@ -20,7 +20,7 @@ namespace API.Middleware
             _next = next;
 
         }
-        public async Task Invoke(HttpContext context){
+        public async Task InvokeAsync(HttpContext context){
             try{
                 await _next(context);
             }

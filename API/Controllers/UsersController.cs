@@ -56,7 +56,7 @@ namespace API.Controllers
             if (await _userRepository.SaveAllAsync()) return NoContent();
             return BadRequest("Failed to update user");
         }
-
+  
         [HttpPost("add-photo")]
         public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
         {
@@ -79,10 +79,11 @@ namespace API.Controllers
                 return CreatedAtRoute("GetUser", new {username=user.UserName}, _mapper.Map<PhotoDto>(photo));
 
             }
-            return BadRequest("Problrem in Adding");
+            return BadRequest("Problem in Adding");
         }
 
-        [HttpPut("set-main-photo/{photoId}")]
+
+ [HttpPut("set-main-photo/{photoId}")]
         public async Task<ActionResult> SetMainPhoto(int photoId)
         {
            var user=await _userRepository.GetUserByUsernameAsync(User.GetUsername());
@@ -99,7 +100,7 @@ namespace API.Controllers
              return BadRequest("Failed to set main photo");
         }
 
-        [HttpDelete("delete-photo/{photoId}")]
+                 [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto(int photoId){
             var user=await _userRepository.GetUserByUsernameAsync(User.GetUsername());
             
@@ -116,7 +117,7 @@ namespace API.Controllers
             } 
             user.Photos.Remove(photo);
             if(await _userRepository.SaveAllAsync()) return Ok();
-            return BadRequest("Failde to delete the photo");
+            return BadRequest("Fail to delete the photo");
         }
     }
 }

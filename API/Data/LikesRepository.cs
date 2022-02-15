@@ -13,10 +13,12 @@ namespace API.Data
 {
     public class LikesRepository : ILikesRepository
     {
-          public DataContext _context { get; }
+        private readonly DataContext _context;
+      
         public LikesRepository(DataContext context)
         {
             _context = context;
+      
         }   
 
         public async Task<UserLike> GetUserLike(int SourceUserId, int LikedUserId)

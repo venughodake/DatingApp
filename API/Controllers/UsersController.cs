@@ -20,18 +20,21 @@ namespace API.Controllers
     public class UsersController : BaseApiController
     {
         private readonly IMapper _mapper;
-        public IPhotoService _photoService { get; }
-
-        public IUserRepository _userRepository { get; }
+        private readonly IUserRepository _userRepository;
+        private readonly IPhotoService _photoService;
         public UsersController(IUserRepository userRepository, IMapper mapper, IPhotoService photoService)
         {
             _photoService = photoService;
+            _userRepository = userRepository;     
             _mapper = mapper;
-            _userRepository = userRepository;
+       
         }
+
+
+        [Authorize(Roles = "Admin")]
         [HttpGet]
 
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers(     [FromQuery]UserParams userParams)
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
        
              var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
@@ -45,7 +48,7 @@ namespace API.Controllers
              return Ok(users);
         }
             
-
+[Authorize(Roles = "Member")]
         [HttpGet("{username}", Name = "GetUser")]
 
         public async Task<ActionResult<MemberDto>> GetUser(string username)
